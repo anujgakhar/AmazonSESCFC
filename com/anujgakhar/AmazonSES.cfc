@@ -38,7 +38,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		<cfargument name="secretKey" type="string" required="true" default="" hint="The amazon secret key"/>	
 		<cfargument name="endPointUrl" type="string" required="false" default="https://email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
 		<cfscript>
-			setEndPoint(arguments.endPointUrl);
+			setEndPointUrl(arguments.endPointUrl);
 			setAuthDetails(arguments.accesskey, arguments.secretKey);
 			return this;
 		</cfscript>
@@ -335,13 +335,13 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		
 		<!--- API CAll --->
 		<cfhttp method="#arguments.method#"
-				url="#variables.instance.endPoint#/"
+				url="#variables.instance.endPointUrl#/"
 				charset="utf-8"
 				result="HTTPResults"
 				timeout="#arguments.timeout#">
 
 			<cfhttpparam type="header" name="Date" value="#timestamp#" />
-			<cfhttpparam type="header" name="Host" value="#variables.instance.endPoint#" />
+			<cfhttpparam type="header" name="Host" value="#variables.instance.endPointUrl#" />
 			<cfhttpparam type="header" name="X-Amzn-Authorization" value="AWS3-HTTPS AWSAccessKeyId=#variables.instance.accessKey#,Algorithm=HmacSHA256,Signature=#createSignature(timestamp)#" />
 
 			<cfloop list="#sortedParams#" index="param">

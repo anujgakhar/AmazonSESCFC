@@ -322,10 +322,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		<cfscript>
 			var results = {error=false,response={},message="",responseheader={}};
 			var HTTPResults = "";
-			var signature = "";
 			var timestamp = GetHTTPTimeString(Now());
-			var param = "";
-			var x=1;
 			var sortedParams = listSort(structKeyList(arguments.parameters), "textnocase");
 			var paramtype = "URL";
 			if(arguments.method eq "POST"){
@@ -333,7 +330,6 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			}
 		</cfscript>
 		
-		<!--- API CAll --->
 		<cfhttp method="#arguments.method#"
 				url="#variables.instance.endPointUrl#/"
 				charset="utf-8"

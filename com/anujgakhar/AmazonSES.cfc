@@ -36,10 +36,11 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 	<cffunction name="init" hint="Initializes the CFC" output="false" returntype="any">
 		<cfargument name="accessKey" type="string" required="true" default="" hint="The amazon access key"/>
 		<cfargument name="secretKey" type="string" required="true" default="" hint="The amazon secret key"/>	
-		<cfargument name="endPointUrl" type="string" required="false" default="https://email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
+		<cfargument name="host" type="string" required="false" default="email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
 		<cfscript>
-			setEndPointUrl(arguments.endPointUrl);
+			setEndPointUrl(arguments.host);
 			setAuthDetails(arguments.accesskey, arguments.secretKey);
+			variables.instance.host = trim(arguments.host);
 			return this;
 		</cfscript>
 	</cffunction>	
@@ -54,9 +55,9 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
     </cffunction>
 
     <cffunction name="setEndPointUrl" output="false" access="private" returntype="void" hint="Set the endpoint for AWS Email Service">
-    	<cfargument name="endPointUrl" type="string" required="false" default="https://email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
+    	<cfargument name="host" type="string" required="false" default="https://email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
     	<cfscript>
-			variables.instance.endPointUrl = arguments.endPointUrl;
+			variables.instance.endPointUrl = "https://#arguments.host#";
 		</cfscript>
     </cffunction>
 
@@ -347,18 +348,18 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			<cfthrow message = "EndPointUrl not defined" type="com.anujgakhar.AmazonSES" />
 		</cfif>
 		
-		<cfhttp method="#arguments.method#"
+		<cfhttp method="GET"
 				url="#variables.instance.endPointUrl#/"
 				charset="utf-8"
 				result="HTTPResults"
 				timeout="#arguments.timeout#">
 
 			<cfhttpparam type="header" name="Date" value="#timestamp#" />
-			<cfhttpparam type="header" name="Host" value="#variables.instance.endPointUrl#" />
+			<cfhttpparam type="header" name="Host" value="#variables.instance.host#" />
 			<cfhttpparam type="header" name="X-Amzn-Authorization" value="AWS3-HTTPS AWSAccessKeyId=#variables.instance.accessKey#,Algorithm=HmacSHA256,Signature=#createSignature(timestamp)#" />
 
 			<cfloop list="#sortedParams#" index="param">
-				<cfhttpparam type="#paramType#" name="#param#" value="#arguments.parameters[param]#" />
+				<cfhttpparam type="#paramType#" name="#param#" value="#trim(arguments.parameters[param])#" />
 			</cfloop>
 		</cfhttp>
 

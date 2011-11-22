@@ -64,12 +64,12 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		 <cfreturn variables.instance.accessKey />	
 	</cffunction>
 	
-	<cffunction name="getSecretKey" output="false" access="public" returntype="void" hint="Get the amazon access key">
+	<cffunction name="getSecretKey" output="false" access="public" returntype="void" hint="Get the amazon secret key">
 		 <cfreturn variables.instance.secretKey />	
 	</cffunction>	
 	
-	<cffunction name="getEndPoint" output="false" access="public" returntype="string" hint="Get the endpoint for AWS Email Service">
-		 <cfreturn variables.instance.endPoint />
+	<cffunction name="getEndPointUrl" output="false" access="public" returntype="string" hint="Get the endpoint for AWS Email Service">
+		 <cfreturn variables.instance.endPointUrl />
 	</cffunction>
 	
 	<cffunction name="verifyEmailAddress" output="false" access="public" returntype="struct" hint="Verifies an email address. This action causes a confirmation email message to be sent to the specified address">
@@ -320,14 +320,20 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		<cfargument name="parameters" type="struct" required="false" default="#structNew()#" hint="An struct of HTTP URL parameters to send in the request"/>
 		<cfargument name="timeout" type="numeric" required="false" default="20" hint="The default call timeout"/>
 		<cfscript>
-			var results = {error=false,response={},message="",responseheader={}};
+			var results = {};
 			var HTTPResults = "";
 			var timestamp = GetHTTPTimeString(Now());
 			var sortedParams = listSort(structKeyList(arguments.parameters), "textnocase");
 			var paramtype = "URL";
+			
 			if(arguments.method eq "POST"){
 				paramtype = "FORMFIELD";
 			}
+			
+			results.error = false;
+			results.response = {};
+			results.message ="";
+			results.responseheader = {};
 		</cfscript>
 		
 		<cfhttp method="#arguments.method#"

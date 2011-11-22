@@ -10,7 +10,7 @@ Pass in your auth credentials to the CFC's init() method and start using it.
 	ACCESS_KEY = "access_key";
 	SECRET_KEY = "secret_key";
 
-	objSes = createObject("com.anujgakhar.AmazonSES").init(
+	objSes = createObject("component","com.anujgakhar.AmazonSES").init(
 	accessKey="#ACCESS_KEY#", 
 	secretKey="#SECRET_KEY#"
 	);

@@ -335,6 +335,18 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			results.responseheader = {};
 		</cfscript>
 		
+		<cfif not structKeyExists(variables.instance, "accessKey") or not len(trim(variables.instance.accessKey))>
+			<cfthrow message = "AccessKey not defined" type="com.anujgakhar.AmazonSES" />
+		</cfif>
+		
+		<cfif not structKeyExists(variables.instance, "secretKey") or not len(trim(variables.instance.secretKey))>
+			<cfthrow message = "SecretKey not defined" type="com.anujgakhar.AmazonSES" />
+		</cfif>
+		
+		<cfif not structKeyExists(variables.instance, "endPointUrl") or not len(trim(variables.instance.endPointUrl))>
+			<cfthrow message = "EndPointUrl not defined" type="com.anujgakhar.AmazonSES" />
+		</cfif>
+		
 		<cfhttp method="#arguments.method#"
 				url="#variables.instance.endPointUrl#/"
 				charset="utf-8"

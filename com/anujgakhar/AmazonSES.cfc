@@ -79,7 +79,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var apiArgs = {};
 			var apiCall = "";
 			
-			apiArgs['method'] = "POST";
+			apiArgs.method = "POST";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "VerifyEmailAddress";
 			apiArgs.parameters['EmailAddress'] = trim(arguments.emailAddress);
@@ -105,7 +105,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var apiArgs = {};
 			var apiCall = "";
 			
-			apiArgs['method'] = "DELETE";
+			apiArgs.method = "DELETE";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "DeleteVerifiedEmailAddress";
 			apiArgs.parameters['EmailAddress'] = trim(arguments.emailAddress);
@@ -131,7 +131,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var apiArgs = {};
 			var apiCall = "";
 			
-			apiArgs['method'] = "GET";
+			apiArgs.method = "GET";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "ListVerifiedEmailAddresses";
 			
@@ -161,7 +161,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var results = {};
 			var quotaResults = {};
 			
-			apiArgs['method'] = "GET";
+			apiArgs.method = "GET";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "GetSendQuota";
 			
@@ -193,7 +193,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var results = {};
 			var dataPoints = [];
 			
-			apiArgs['method'] = "GET";
+			apiArgs.method = "GET";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "GetSendStatistics";
 			
@@ -240,7 +240,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			var apiCall = "";
 			var results = {};
 			
-			apiArgs['method'] = "POST";
+			apiArgs.method = "POST";
 			apiArgs.parameters = {};
 			apiArgs.parameters['Action'] = "SendEmail";
 			
@@ -316,7 +316,6 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 	
     <cffunction name="SESRequest" output="false" access="private" returntype="struct" hint="Invoke an Amazon REST Call">
     	<cfargument name="method" type="string" required="false" default="GET" hint="The HTTP method to invoke"/>
-		<cfargument name="action" type="string" required="true" default="" hint="The API operation to perform (http://docs.amazonwebservices.com/ses/latest/APIReference/API_Operations.html)"/>
 		<cfargument name="parameters" type="struct" required="false" default="#structNew()#" hint="An struct of HTTP URL parameters to send in the request"/>
 		<cfargument name="timeout" type="numeric" required="false" default="20" hint="The default call timeout"/>
 		<cfscript>

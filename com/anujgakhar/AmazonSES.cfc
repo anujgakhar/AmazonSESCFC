@@ -139,7 +139,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			apiCall = SESRequest(argumentCollection = apiArgs);
 
 			if(!apiCall.error){
-				emailsXML = xmlSearch(apiCall.response, "//:member");
+				emailsXML = xmlSearch(apiCall.response, "//*[ local-name() = 'member' ]");
 				for(x=1; x lte arrayLen(emailsXML); x++){
 					thisEmail = trim(emailsXML[x].xmlText);
 					arrayAppend(verifiedEmailAddresses, thisEmail);
@@ -169,7 +169,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			apiCall = SESRequest(argumentCollection = apiArgs);
 			
 			if(!apiCall.error){
-				quotaXML = xmlSearch(apiCall.response, "//:GetSendQuotaResult");
+				quotaXML = xmlSearch(apiCall.response, "//*[ local-name() = 'GetSendQuotaResult' ]");
 				for(x=1; x lte arrayLen(quotaXML[1].XmlChildren); x++){
 					thisQuota = quotaXML[1].XmlChildren[x];
 					quotaName = trim(thisQuota.XmlName);
@@ -201,7 +201,7 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			apiCall = SESRequest(argumentCollection = apiArgs);
 			
 			if(!apiCall.error){
-				dataPointsXML = xmlSearch(apiCall.response, "//:member");
+				dataPointsXML = xmlSearch(apiCall.response, "//*[ local-name() = 'member' ]");
 				for(x=1; x lte arrayLen(dataPointsXML); x++){
 					thisDataPoint = dataPointsXML[x].XmlChildren;
 					dataPointDetails = {};
@@ -224,18 +224,18 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 	</cffunction>
 	
 	<cffunction name="sendEmail" output="false" access="public" returntype="struct" hint="Composes an email message based on input data, and then immediately queues the message for sending">
-		<cfargument name="to" required="true" type="array" hint="email addresses to be used in the TO field" />
-		<cfargument name="cc" required="false" type="array" hint="email addresses to be used in the CC field" />
-		<cfargument name="bcc" required="false" type="array" hint="email addresses to be used in the BCC field" />
-		<cfargument name="replyto" required="false" type="array" hint="The reply-to email address(es) for the message. If the recipient replies to the message, each reply-to address will receive the reply" />
-		<cfargument name="from" required="true" type="string" hint="The sender's email address" />
-		<cfargument name="subject" required="false" type="string" hint="subject of the email" />
-		<cfargument name="subjectCharset" required="false" type="string" hint="Charset of the subject" default="utf-8" />
-		<cfargument name="returnpath" required="false" type="string" hint="The email address to which bounce notifications are to be forwarded. If the message cannot be delivered to the recipient, then an error message will be returned from the recipient's ISP; this message will then be forwarded to the email address specified by the ReturnPath parameter" />
-		<cfargument name="messagetext" required="true" type="string" hint="message of the email" />
-		<cfargument name="messagetextCharset" required="false" type="string" hint="message of the email" />
-		<cfargument name="messagehtml" required="false" type="string" hint="html message" />
-		<cfargument name="messagehtmlCharset" required="false" type="string" hint="Charset of the html message" />
+		<cfargument name="to" 					required="true" 	type="array" 	hint="email addresses to be used in the TO field" />
+		<cfargument name="cc" 					required="false" 	type="array" 	hint="email addresses to be used in the CC field" />
+		<cfargument name="bcc" 					required="false" 	type="array" 	hint="email addresses to be used in the BCC field" />
+		<cfargument name="replyto" 				required="false" 	type="array" 	hint="The reply-to email address(es) for the message. If the recipient replies to the message, each reply-to address will receive the reply" />
+		<cfargument name="from" 				required="true" 	type="string" 	hint="The sender's email address" />
+		<cfargument name="subject" 				required="false" 	type="string" 	hint="subject of the email" />
+		<cfargument name="subjectCharset" 		required="false" 	type="string" 	hint="Charset of the subject" default="utf-8" />
+		<cfargument name="returnpath" 			required="false" 	type="string" 	hint="The email address to which bounce notifications are to be forwarded. If the message cannot be delivered to the recipient, then an error message will be returned from the recipient's ISP; this message will then be forwarded to the email address specified by the ReturnPath parameter" />
+		<cfargument name="messagetext" 			required="true" 	type="string" 	hint="message of the email" />
+		<cfargument name="messagetextCharset" 	required="false" 	type="string" 	hint="message of the email" />
+		<cfargument name="messagehtml" 			required="false" 	type="string" 	hint="html message" />
+		<cfargument name="messagehtmlCharset" 	required="false" 	type="string" 	hint="Charset of the html message" />
 		<cfscript>
 			var apiArgs = {};
 			var apiCall = "";
@@ -316,8 +316,8 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 	
 	
     <cffunction name="SESRequest" output="false" access="private" returntype="struct" hint="Invoke an Amazon REST Call">
-    	<cfargument name="method" type="string" required="false" default="GET" hint="The HTTP method to invoke"/>
-		<cfargument name="parameters" type="struct" required="false" default="#structNew()#" hint="An struct of HTTP URL parameters to send in the request"/>
+    	<cfargument name="method" 		type="string" required="false" default="GET" 			hint="The HTTP method to invoke"/>
+		<cfargument name="parameters" 	type="struct" required="false" default="#structNew()#" 	hint="An struct of HTTP URL parameters to send in the request"/>
 		<cfargument name="timeout" type="numeric" required="false" default="20" hint="The default call timeout"/>
 		<cfscript>
 			var results = {};

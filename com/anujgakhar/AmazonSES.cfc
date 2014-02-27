@@ -37,6 +37,13 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 		<cfargument name="accessKey" type="string" required="true" default="" hint="The amazon access key"/>
 		<cfargument name="secretKey" type="string" required="true" default="" hint="The amazon secret key"/>	
 		<cfargument name="host" type="string" required="false" default="email.us-east-1.amazonaws.com" hint="The endpoint for AWS Email Service"/>
+		
+		<!--- There are more endpoints available, use the endpoint that is configured in your AWS Console --->
+		<!--- us-east-1: email-smtp.us-east-1.amazonaws.com --->
+		<!--- us-west-2: email-smtp.us-west-2.amazonaws.com --->
+		<!--- eu-west-1: email-smtp.eu-west-1.amazonaws.com --->
+		<!--- Check the docs for new available endpoints, http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-connect.html --->
+
 		<cfscript>
 			setEndPointUrl(arguments.host);
 			setAuthDetails(arguments.accesskey, arguments.secretKey);

@@ -304,7 +304,8 @@ API Reference : http://docs.amazonwebservices.com/ses/latest/APIReference/
 			apiCall = SESRequest(argumentCollection = apiArgs);
 			
 			if(!apiCall.error){
-				sendEmailXMl = xmlSearch(apiCall.response, "//:MessageId");
+				sendEmailXMl = xmlSearch(apiCall.response, "//*[ local-name() = 'MessageId' ]");
+				
 				if(arraylen(sendEmailXML)){
 					results["data"] = {};
 					results["data"]["MessageId"] = sendEmailXMl[1].XmlText;
